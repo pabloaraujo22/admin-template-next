@@ -17,6 +17,8 @@ export function IconeCasa() {
     );
 }
 
+//Para mais Icones acessar ... https://heroicons.com/
+
 export function IconeAjustes() {
     return (
         <svg
