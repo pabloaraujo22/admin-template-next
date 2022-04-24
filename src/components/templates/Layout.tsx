@@ -1,3 +1,4 @@
+import useAppContext from '../../shared/hooks/useAppContext';
 import Cabecalho from './Cabecalho';
 import Conteudo from './Conteudo';
 import MenuLateral from './MenuLateral';
@@ -8,8 +9,10 @@ interface LayoutProps {
     children?: any;
 }
 export default function Layout(props: LayoutProps) {
+    const { tema } = useAppContext();
+
     return (
-        <div className={`dark flex h-screen w-screen`}>
+        <div className={`${tema} flex h-screen w-screen`}>
             <MenuLateral />
             <div
                 className={`flex flex-col w-full p-7 bg-gray-300 dark:bg-gray-800`}

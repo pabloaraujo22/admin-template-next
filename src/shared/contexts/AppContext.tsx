@@ -1,18 +1,25 @@
-import { createContext, useState } from 'react';
+import { createContext, useCallback, useState } from 'react';
 
+type Tema = 'dark' | '';
 interface AppContextProps {
-    children?: any;
-    nome?: string;
+    tema?: Tema;
+    alternarTema?: () => void;
 }
 
-const AppContext = createContext({} as AppContextProps);
+const AppContext = createContext<AppContextProps>({});
 
 export const AppConsumer = AppContext.Consumer;
 
-export function AppProvider({ children }: AppContextProps) {
-    const [nome, setNome] = useState<string>('Teste Api Context!!');
+export function AppProvider({ children }) {
+    const [tema, setTema] = useState<Tema>('');
+
+    const alternarTema = useCallback(() => {
+        setTema(tema === '' ? 'dark' : '');
+    }, [tema]);
     return (
-        <AppContext.Provider value={{ nome }}>{children}</AppContext.Provider>
+        <AppContext.Provider value={{ tema, alternarTema }}>
+            {children}
+        </AppContext.Provider>
     );
 }
 export default AppContext;
