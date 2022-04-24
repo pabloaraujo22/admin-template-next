@@ -1,17 +1,17 @@
-import { IconeAjustes, IconeCasa, IconeSino } from '../icons';
+import { IconeAjustes, IconeCasa, IconeSair, IconeSino } from '../icons';
 import Logo from './Logo';
 import MenuItem from './MenuItem';
 
 interface MenuLateralProps {}
 export default function MenuLateral(props: MenuLateralProps) {
     return (
-        <aside>
+        <aside className={`flex flex-col`}>
             <div
                 className={`flex flex-col items-center justify-center h-20 w-20 bg-gradient-to-r from-indigo-500 to-purple-800`}
             >
                 <Logo />
             </div>
-            <ul>
+            <ul className={`flex-1`}>
                 <MenuItem url="/" texto="Inicio" icone={<IconeCasa />} />
                 <MenuItem
                     url="/ajustes"
@@ -22,6 +22,14 @@ export default function MenuLateral(props: MenuLateralProps) {
                     url="/notificacoes"
                     texto="Notificações"
                     icone={<IconeSino />}
+                />
+            </ul>
+            <ul>
+                <MenuItem
+                    onClick={() => console.log('logout')}
+                    texto="Sair"
+                    className={`text-red-600 hover:bg-red-400 hover:text-white`}
+                    icone={<IconeSair />}
                 />
             </ul>
         </aside>
