@@ -5,7 +5,9 @@ import MenuItem from './MenuItem';
 interface MenuLateralProps {}
 export default function MenuLateral(props: MenuLateralProps) {
     return (
-        <aside className={`flex flex-col`}>
+        <aside
+            className={`flex flex-col bg-gray-200 text-gray-700 dark:bg-gray-900 dark:text-gray-200`}
+        >
             <div
                 className={`flex flex-col items-center justify-center h-20 w-20 bg-gradient-to-r from-indigo-500 to-purple-800`}
             >
@@ -28,7 +30,7 @@ export default function MenuLateral(props: MenuLateralProps) {
                 <MenuItem
                     onClick={() => console.log('logout')}
                     texto="Sair"
-                    className={`text-red-600 hover:bg-red-400 hover:text-white`}
+                    className={`text-red-600  hover:bg-red-400  hover:text-white dark:text-red-400 dark:hover:text-white`}
                     icone={<IconeSair />}
                 />
             </ul>
