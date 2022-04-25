@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState } from 'react';
 import AuthInput from '../components/auth/AuthInput';
-import Image from 'next/image';
+import { IconeAtencao } from '../components/icons';
 
 interface AutenticacaoProps {}
 
@@ -9,11 +9,21 @@ export default function Autenticacao(props: AutenticacaoProps) {
     const [modo, setModo] = useState<'login' | 'cadastro'>('login');
     const [email, setEmail] = useState<string>('');
     const [senha, setSenha] = useState<string>('');
+    const [erro, setErro] = useState(null);
+
+    function exibirErro(msg: string, tempoEmSegundos: number = 5) {
+        setErro(msg);
+        setTimeout(() => {
+            setErro(null);
+        }, tempoEmSegundos * 1000);
+    }
 
     function onSubmit() {
         if (modo === 'login') {
+            exibirErro('Ocorreu um erro no Login!');
             console.log('login');
         } else {
+            exibirErro('Ocorreu um erro no Cadastro!');
             console.log('Cadastrar');
         }
     }
@@ -33,6 +43,19 @@ export default function Autenticacao(props: AutenticacaoProps) {
                         ? 'Entre com sua Conta'
                         : 'Cadastre-se na Plataforma'}
                 </h1>
+                {erro ? (
+                    <div
+                        className={` 
+                    flex items-center
+                    bg-red-400 text-white py-3 px-5 my-2 border border-red-700 rounded-lg
+                `}
+                    >
+                        {IconeAtencao()}
+                        <span className={`mx-3`}>{erro}</span>
+                    </div>
+                ) : (
+                    false
+                )}
                 <AuthInput
                     tipo="text"
                     label="Email"
