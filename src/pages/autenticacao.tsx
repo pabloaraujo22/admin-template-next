@@ -1,5 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 import { useState } from 'react';
 import AuthInput from '../components/auth/AuthInput';
+import Image from 'next/image';
 
 interface AutenticacaoProps {}
 
@@ -17,9 +19,16 @@ export default function Autenticacao(props: AutenticacaoProps) {
     }
 
     return (
-        <div className={`flex flex-col h-screen items-center justify-center`}>
-            <div className={`w-1/2`}>
-                <h1 className={`text-xl font-bold mb-5`}>
+        <div className={`flex h-screen items-center justify-center`}>
+            <div className={`hidden md:block md:w-1/2 lg:w-2/3`}>
+                <img
+                    src="https://source.unsplash.com/random"
+                    alt="Imagem da Tela de Autenticação"
+                    className={`h-screen w-full object-cover`}
+                />
+            </div>
+            <div className={`m-10 w-full md:w-1/2 lg:w-2/3`}>
+                <h1 className={`text-3xl font-bold mb-5`}>
                     {modo === 'login'
                         ? 'Entre com sua Conta'
                         : 'Cadastre-se na Plataforma'}
@@ -61,6 +70,30 @@ export default function Autenticacao(props: AutenticacaoProps) {
                 >
                     Entrar com o Google
                 </button>
+
+                {modo === 'login' ? (
+                    <p
+                        className={`
+                        text-blue-500 hover:text-blue-700 font-semibold 
+                        cursor-pointer
+                        mt-8
+                        `}
+                    >
+                        <a onClick={() => setModo('cadastro')}>
+                            Criar uma conta?
+                        </a>
+                    </p>
+                ) : (
+                    <p
+                        className={`
+                    text-blue-500 hover:text-blue-700 font-semibold 
+                    cursor-pointer
+                    mt-8
+                    `}
+                    >
+                        <a onClick={() => setModo('login')}>Já tem conta?</a>
+                    </p>
+                )}
             </div>
         </div>
     );
