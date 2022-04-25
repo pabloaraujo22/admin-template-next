@@ -29,8 +29,14 @@ export function AuthProvider({ children }: any) {
     const [usuario, setUsuario] = useState<Usuario>(null);
 
     const loginGoogle = useCallback(async () => {
-        console.log('Login google...');
-        router.push('/');
+        const resposta = await firebase
+            .auth()
+            .signInWithPopup(new firebase.auth.GoogleAuthProvider());
+        if (resposta.user?.email) {
+            const usuario = await usuarioNormalisado(resposta.user);
+            setUsuario(usuario);
+            router.push('/');
+        }
     }, [router]);
 
     return (
