@@ -7,7 +7,7 @@ import useAuthContext from '../shared/hooks/useAuthContext';
 interface AutenticacaoProps {}
 
 export default function Autenticacao(props: AutenticacaoProps) {
-    const { usuario, loginGoogle } = useAuthContext();
+    const { usuario, loginGoogle, cadastrar, login } = useAuthContext();
 
     const [modo, setModo] = useState<'login' | 'cadastro'>('login');
     const [email, setEmail] = useState<string>('');
@@ -21,13 +21,15 @@ export default function Autenticacao(props: AutenticacaoProps) {
         }, tempoEmSegundos * 1000);
     }
 
-    function onSubmit() {
-        if (modo === 'login') {
-            exibirErro('Ocorreu um erro no Login!');
-            console.log('login');
-        } else {
-            exibirErro('Ocorreu um erro no Cadastro!');
-            console.log('Cadastrar');
+    async function onSubmit() {
+        try {
+            if (modo === 'login') {
+                await login(email, senha);
+            } else {
+                await cadastrar(email, senha);
+            }
+        } catch (e) {
+            exibirErro(e?.message ?? 'Ocorreu um erro inesperado!');
         }
     }
 

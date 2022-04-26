@@ -7,6 +7,8 @@ interface AuthContextProps {
     usuario?: Usuario;
     carregando?: boolean;
     loginGoogle?: () => Promise<void>;
+    login?: (email: string, senha: string) => Promise<void>;
+    cadastrar?: (email: string, senha: string) => Promise<void>;
     logout?: () => Promise<void>;
 }
 
@@ -68,13 +70,52 @@ export function AuthProvider({ children }: any) {
                 .auth()
                 .signInWithPopup(new firebase.auth.GoogleAuthProvider());
 
-            configurarSessao(resposta.user);
+            await configurarSessao(resposta.user);
             router.push('/');
         } catch (e) {
+            throw new Error(e.message);
         } finally {
             setCarregando(false);
         }
     }, [configurarSessao, router]);
+
+    const cadastrar = useCallback(
+        async (email: string, senha: string) => {
+            try {
+                setCarregando(true);
+                const resposta = await firebase
+                    .auth()
+                    .createUserWithEmailAndPassword(email, senha);
+
+                await configurarSessao(resposta.user);
+                router.push('/');
+            } catch (e) {
+                throw new Error(e.message);
+            } finally {
+                setCarregando(false);
+            }
+        },
+        [configurarSessao, router]
+    );
+
+    const login = useCallback(
+        async (email: string, senha: string) => {
+            try {
+                setCarregando(true);
+                const resposta = await firebase
+                    .auth()
+                    .signInWithEmailAndPassword(email, senha);
+
+                await configurarSessao(resposta.user);
+                router.push('/');
+            } catch (e) {
+                throw new Error(e.message);
+            } finally {
+                setCarregando(false);
+            }
+        },
+        [configurarSessao, router]
+    );
 
     const logout = useCallback(async () => {
         try {
@@ -82,6 +123,7 @@ export function AuthProvider({ children }: any) {
             await firebase.auth().signOut();
             await configurarSessao(null);
         } catch (e) {
+            throw new Error(e.message);
         } finally {
             setCarregando(false);
         }
@@ -97,7 +139,14 @@ export function AuthProvider({ children }: any) {
     }, [configurarSessao]);
     return (
         <AuthContext.Provider
-            value={{ usuario, carregando, loginGoogle, logout }}
+            value={{
+                usuario,
+                carregando,
+                loginGoogle,
+                login,
+                cadastrar,
+                logout,
+            }}
         >
             {children}
         </AuthContext.Provider>
