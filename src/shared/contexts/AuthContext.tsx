@@ -29,18 +29,15 @@ export function AuthProvider({ children }: any) {
     const [carregando, setCarregando] = useState<boolean>(true);
     const [usuario, setUsuario] = useState<Usuario>(null);
 
-    const gerenciarCookie = useCallback(
-        (logado: boolean) => {
-            if (logado) {
-                Cookie.set('admin-template-auth', usuario?.token, {
-                    expires: 1,
-                });
-            } else {
-                Cookie.remove('admin-template-auth');
-            }
-        },
-        [usuario?.token]
-    );
+    const gerenciarCookie = useCallback((logado: boolean) => {
+        if (logado) {
+            Cookie.set('admin-template-auth', logado.toString(), {
+                expires: 1,
+            });
+        } else {
+            Cookie.remove('admin-template-auth');
+        }
+    }, []);
     const configurarSessao = useCallback(
         async (usuarioFirebase: firebase.User) => {
             if (usuarioFirebase?.email) {
