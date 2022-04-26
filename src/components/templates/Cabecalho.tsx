@@ -12,7 +12,7 @@ export default function Cabecalho(props: CabecalhoProps) {
     return (
         <div className={`flex`}>
             <Titulo titulo={props.titulo} subtitulo={props.subtitulo} />
-            <div className={`flex flex-1 items-center justify-end`}>
+            <div className={`flex flex-auto items-center justify-end`}>
                 <BotaoAlternarTema tema={tema} alternarTema={alternarTema} />
                 <AvatarUsuario className="ml-3" />
             </div>
