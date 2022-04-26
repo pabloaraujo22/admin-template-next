@@ -1,5 +1,6 @@
+import forcarAutenticacao from '../../shared/functions/ForcarAutenticacao';
 import useAppContext from '../../shared/hooks/useAppContext';
-import ForcarAutenticacao from '../auth/ForcarAutenticacao';
+// import ForcarAutenticacao from '../auth/ForcarAutenticacao';
 import Cabecalho from './Cabecalho';
 import Conteudo from './Conteudo';
 import MenuLateral from './MenuLateral';
@@ -11,21 +12,15 @@ interface LayoutProps {
 }
 export default function Layout(props: LayoutProps) {
     const { tema } = useAppContext();
-
-    return (
-        <ForcarAutenticacao>
-            <div className={`${tema} flex h-screen w-screen`}>
-                <MenuLateral />
-                <div
-                    className={`flex flex-col w-full p-7 bg-gray-300 dark:bg-gray-800`}
-                >
-                    <Cabecalho
-                        titulo={props.titulo}
-                        subtitulo={props.subtitulo}
-                    />
-                    <Conteudo>{props.children}</Conteudo>
-                </div>
+    return forcarAutenticacao(
+        <div className={`${tema} flex h-screen w-screen`}>
+            <MenuLateral />
+            <div
+                className={`flex flex-col w-full p-7 bg-gray-300 dark:bg-gray-800`}
+            >
+                <Cabecalho titulo={props.titulo} subtitulo={props.subtitulo} />
+                <Conteudo>{props.children}</Conteudo>
             </div>
-        </ForcarAutenticacao>
+        </div>
     );
 }
