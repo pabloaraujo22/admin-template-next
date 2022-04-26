@@ -1,8 +1,7 @@
-import { createContext, useCallback, useState } from 'react';
+import { createContext, useCallback, useEffect, useState } from 'react';
 
-type Tema = 'dark' | '';
 interface AppContextProps {
-    tema?: Tema;
+    tema?: string;
     alternarTema?: () => void;
 }
 
@@ -11,10 +10,17 @@ const AppContext = createContext<AppContextProps>({});
 export const AppConsumer = AppContext.Consumer;
 
 export function AppProvider({ children }) {
-    const [tema, setTema] = useState<Tema>('');
+    const [tema, setTema] = useState<string>('dark');
+
+    useEffect(() => {
+        const temaSalvo = localStorage.getItem('tema');
+        setTema(temaSalvo);
+    }, []);
 
     const alternarTema = useCallback(() => {
-        setTema(tema === '' ? 'dark' : '');
+        const novoTema = tema === '' ? 'dark' : '';
+        setTema(novoTema);
+        localStorage.setItem('tema', novoTema);
     }, [tema]);
     return (
         <AppContext.Provider value={{ tema, alternarTema }}>
