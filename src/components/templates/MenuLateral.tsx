@@ -1,9 +1,11 @@
+import useAuthContext from '../../shared/hooks/useAuthContext';
 import { IconeAjustes, IconeCasa, IconeSair, IconeSino } from '../icons';
 import Logo from './Logo';
 import MenuItem from './MenuItem';
 
 interface MenuLateralProps {}
 export default function MenuLateral(props: MenuLateralProps) {
+    const { logout } = useAuthContext();
     return (
         <aside
             className={`flex flex-col bg-gray-200 text-gray-700 dark:bg-gray-900 dark:text-gray-200`}
@@ -28,7 +30,7 @@ export default function MenuLateral(props: MenuLateralProps) {
             </ul>
             <ul>
                 <MenuItem
-                    onClick={() => console.log('logout')}
+                    onClick={logout}
                     texto="Sair"
                     className={`text-red-600  hover:bg-red-400  hover:text-white dark:text-red-400 dark:hover:text-white`}
                     icone={<IconeSair />}
